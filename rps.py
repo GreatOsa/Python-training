@@ -4,6 +4,7 @@ import sys
 import random
 from enum import Enum
 
+game_count = 0
 
 def play_rps():
         class RPS(Enum):
@@ -29,12 +30,21 @@ def play_rps():
         print("\nyou chose: ", RPS(player).name)
         print("computer chose: ", RPS(computer).name + "\n")
                 
-        if player == computer:
-                print("It's a tie!")
-        elif (player == 1 and computer == 3) or (player == 2 and computer == 1) or (player == 3 and computer == 2):
-                print("You win!")
-        else:
-                print("You lose!")
+        def decide_winner(player, computer):
+                if player == computer:
+                        return "It's a tie!"
+                elif (player == 1 and computer == 3) or (player == 2 and computer == 1) or (player == 3 and computer == 2):
+                        return "You win!"
+                else:
+                        return "You lose!"
+        game_result = decide_winner(player,computer)
+
+        print(game_result)
+        global game_count
+        game_count += 1
+
+        print(f"\nGame count: {game_count}")
+
         print("\nplay again?")
         while True: 
           playagain = input("\nY for yes, N for no: ").strip().lower()
