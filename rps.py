@@ -5,12 +5,13 @@ import random
 from enum import Enum
 
 
-def rps():
+def rps(name="player-one"):
        
         game_count = 0
         player_wins = 0
         computer_wins = 0 
         def play_rps():
+                nonlocal name
                 nonlocal player_wins
                 nonlocal computer_wins
                 class RPS(Enum):
@@ -21,7 +22,7 @@ def rps():
                 # playagain=True
 
         
-                playerChoices = input("\nEnter.. \n1 for Rock \n2 for Paper \n3 for Scissors \n\n")
+                playerChoices = input(f"\n{name} pls enter.. \n1 for Rock \n2 for Paper \n3 for Scissors \n\n")
                 if playerChoices not in ["1", "2", "3"]:
                         print("you must enter 1, 2 or 3")
                         play_rps()
@@ -33,25 +34,24 @@ def rps():
                 if player < 1 or player > 3:
                         sys.exit()
 
-                print("\nyou chose: ", RPS(player).name)
-                print("computer chose: ", RPS(computer).name + "\n")
-                        
+                print(f"\n{name} chose: ", RPS(player).name)
+                print(f"computer chose: ", RPS(computer).name + "\n")
+
                 def decide_winner(player, computer):
                         nonlocal player_wins
                         nonlocal computer_wins
                         if player == computer:
                                 return "It's a tie!"
                         elif (player == 1 and computer == 3) or (player == 2 and computer == 1) or (player == 3 and computer == 2):
-                                
                                 player_wins += 1
-                                return "You win!"
+                                return f"{name} wins!"
                         else:  
                                 computer_wins += 1
-                                return "You lose!"
+                                return f"{name} loses!"
                 game_result = decide_winner(player,computer)
 
                 print(game_result)
-                print(f"\nScore: You {player_wins} - Computer {computer_wins}") 
+                print(f"\nScore: {name} {player_wins} - Computer {computer_wins}") 
                 nonlocal game_count
                 game_count += 1
 
@@ -76,9 +76,20 @@ def rps():
         # print("Game Over")
         # play_rps()
 
-rock_paper_scissors = rps()
-
 if __name__ == "__main__":
-        rock_paper_scissors()  
+        import argparse
 
-  
+        parser = argparse.ArgumentParser(
+                description="Provides a personized game experience."
+        )
+
+        parser.add_argument(
+                "-n", "--name",metavar="name",
+                required=True,
+                help="the name of the player"
+        )
+       
+        args = parser.parse_args()
+
+        rock_paper_scissors = rps(args.name)
+        rock_paper_scissors()
