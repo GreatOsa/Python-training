@@ -9,8 +9,7 @@ def rps():
        
         game_count = 0
         player_wins = 0
-        computer_wins = 0
-
+        computer_wins = 0 
         def play_rps():
                 nonlocal player_wins
                 nonlocal computer_wins
@@ -77,6 +76,9 @@ def rps():
         # print("Game Over")
         # play_rps()
 
-play = rps()
+rock_paper_scissors = rps()
 
-play()
+if __name__ == "__main__":
+        rock_paper_scissors()  
+
+  
