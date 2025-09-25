@@ -6,21 +6,23 @@ from enum import Enum
 
 
 def rps(name="player-one"):
-       
-        game_count = 0
+        # first function
+
+        game_count = 0 # the count
         player_wins = 0
         computer_wins = 0 
+
+        
         def play_rps():
                 nonlocal name
                 nonlocal player_wins
                 nonlocal computer_wins
                 class RPS(Enum):
-                        ROCK = 1
+                        ROCK = 1 
                         PAPER = 2
                         SCISSORS = 3
 
-                # playagain=True
-
+                # playagain=True 
         
                 playerChoices = input(f"\n{name} pls enter.. \n1 for Rock \n2 for Paper \n3 for Scissors \n\n")
                 if playerChoices not in ["1", "2", "3"]:
@@ -48,6 +50,7 @@ def rps(name="player-one"):
                         else:  
                                 computer_wins += 1
                                 return f"{name} loses!"
+                
                 game_result = decide_winner(player,computer)
 
                 print(game_result)
