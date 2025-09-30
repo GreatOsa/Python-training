@@ -51,7 +51,11 @@ class Library():
     def list_books (self):
         if not self.books:
             print("No books in the librery")
-        
+        else:
+         for book in self.books:
+            status = "Available" if book.available else "Borrowed"
+            print(f"{book.title} ({book.isbn}) - {status}")
+
     def find_book(self,book:Book):
       for library_bookisbn in self.books:
         if  book.isbn in library_bookisbn:
@@ -60,9 +64,8 @@ class Library():
             return "Not found"
 
 class Librarian(Member):
-    def __init__(self , name, member_id):
-        self.name=name
-        self.member_id=member_id
+    def __init__(self, name, member_id):
+        super().__init__(name, member_id)
     
     def add_book(self, library:Library, book:Book):
         library.books.append(book)
