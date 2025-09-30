@@ -7,7 +7,7 @@ class Car:
         self.available=True
 
     def __str__(self):
-        return f"{self.year} {self.modal}"
+        return f"{self.year} {self.modal} {self.name}"
     
     def rent(self):
         if self.available :
@@ -30,12 +30,13 @@ class Customer :
             car.available=False
             return f"you just rented the {car.year} {car.modal}"
         return f"{car.year} {car.modal} is already taken"
-    
-    def return_car(self, car:Car):
+
+    def return_car(self, car: Car):
         if car in self.rented_cars:
             self.rented_cars.remove(car)
-            return f"you have successfull return {car.year} {car.modal}"
-        return f"you can't return what you didn't borrow "
+            car.return_car()   # ✅ mark available again
+            return f"You have successfully returned {car.year} {car.modal}"
+        return f"You can't return what you didn't borrow"
     
 class CarRentalService :
     def __init__(self, name ):
@@ -46,14 +47,18 @@ class CarRentalService :
         self.car_list.append(car)
 
     def list_cars(self):
-        return self.car_list
+        if not self.car_list:
+            print("No cars available.")
+        else:
+            for car in self.car_list:
+                status = "Available" if car.available else "Rented"
+                print(f"{car} - {status}")
     
-    def find_car(self,make,car:Car):
-        for car.make in self.car_list :
-            for car.model in self.car_list:
-                 if car.modal in self.car_list:
-                   return "Available"
-                 return "Not found"
+    def find_car(self,name,modal):
+        for car in self.car_list :
+                 if name == car.name and modal == car.modal:
+                   return "Available" if car.available else "Rented"
+        return "Not found"
             
 
 service = CarRentalService("Speedy Rentals")
@@ -61,14 +66,22 @@ service = CarRentalService("Speedy Rentals")
 car1 = Car("Toyota", "Corolla", 2022)
 car2 = Car("Tesla", "Model 3", 2023)
 
-# service.add_car(car1)
-# service.add_car(car2)
+print(car2.__str__())
 
-# customer = Customer("Great", "C001")
+service.add_car(car1)
+service.add_car(car2)
+# print(service.list_cars())
 
-# service.list_cars()
-# customer.rent_car(car1)
-# service.list_cars()
-# customer.rent_car(car1)   # should say already rented
-# customer.return_car(car1)
-# service.list_cars()
+customer = Customer("Great", "C001")
+
+print(service.find_car("Toyota", "Corolla"))  # Available
+customer.rent_car(car1)
+print(service.find_car("Toyota", "Corolla"))  # Rented
+print(service.find_car("Honda", "Civic"))     # Not found
+
+service.list_cars()
+customer.rent_car(car1)
+service.list_cars()
+customer.rent_car(car1)   # should say already rented
+customer.return_car(car1)
+service.list_cars()
