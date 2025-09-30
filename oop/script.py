@@ -25,6 +25,10 @@ class Student(Person) :
     def study(self):
         print(f"{self.name} is studying.")
 
+    @classmethod
+    def from_person(cls,person,student_id):
+        return cls(person.name,person.age,person.gender,student_id)
+
 person1 = Person("Great" , 20, "male")
 
 person1.introduce()
@@ -35,5 +39,9 @@ student1.introduce()
 student1.study()
 
 student2= Student(person1.name, person1.age,person1.gender,"23wer3")
+student2.introduce()
+student2.study()
+
+student3=Student.from_person(person1,"e9ej84")
 student2.introduce()
 student2.study()
